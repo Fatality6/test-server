@@ -27,7 +27,7 @@ async function start() {
     try {
         
         //затем запускаем приложение на заданном порту
-        app.listen(`${PORT}`, ()=>console.log(`Server has been started on port:${PORT}`))
+        app.listen(`${PORT}`, ()=>console.log(`=============== Server has been started =================`))
 
     } catch (error) {
         console.log(error)
