@@ -11,6 +11,7 @@ const router = new Router()
 router.post('/login', login)
 
 //Get me
-router.get('/me',checkAuth, getMe)
+router.post('/me', checkAuth, getMe)
+
 
 export default router
