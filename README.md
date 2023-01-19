@@ -9,5 +9,7 @@
 - dotenv
 
 Ссылка на опубликованние приложение: https://63c6f2a996e7340aa58bc7c0--guileless-cupcake-353c9c.netlify.app
+
 email: admin
+
 пароль: 12345
