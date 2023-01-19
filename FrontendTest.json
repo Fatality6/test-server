@@ -6,9 +6,9 @@
             "name": "Администратор"
         },
         {
-            "email": "oleg",
+            "email": "admin",
             "password": "12345",
-            "name": "oleg"
+            "name": "admin"
         },
         {
             "email": "manager@example.com",
