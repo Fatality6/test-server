@@ -28,16 +28,16 @@ export const login = (req, res) => {
                     { expiresIn: '30d' }
                 )
                 //возвращаем ответ пользователю, в котором есть токен, объект user и сообщение
-                return res.json({
+                return res.status(200).json({
                     token,
                     user,
                     message: 'Вы вошли в систему'
                 })
             }
         }
-        res.json({ message: 'Проверьте данные для входа' })
+        res.status(401).json({ message: 'Проверьте данные для входа' })
     } catch (error) {
-        res.json({ message: 'Ошибка авторизации' })
+        res.status(500).json({ message: 'Ошибка авторизации' })
     }
 }
 
@@ -61,33 +61,37 @@ export const getMe = (req, res) => {
                     { expiresIn: '30d' }
                 )
                 //сортировка
-                if (select === '1') {
-                    sort = data.orders.sort((a, b) => {
-                        if (a.id > b.id) return 1
-                        if (a.id < b.id) return -1
-                        return 0
-                    })
-                }
-                if (select === '2') {
-                    sort = data.orders.sort((a, b) => {
-                        if (a.amount < b.amount) return 1
-                        if (a.amount > b.amount) return -1
-                        return 0
-                    })
-                }
-                if (select === '3') {
-                    sort = data.orders.sort((a, b) => {
-                        if (a.date < b.date) return 1
-                        if (a.date > b.date) return -1
-                        return 0
-                    })
+                switch (select) {
+                    case '1':
+                        sort = data.orders.sort((a, b) => {
+                            if (a.id > b.id) return 1
+                            if (a.id < b.id) return -1
+                            return 0
+                        });
+                        break;
+                    case '2':
+                        sort = data.orders.sort((a, b) => {
+                            if (a.amount < b.amount) return 1
+                            if (a.amount > b.amount) return -1
+                            return 0
+                        });
+                        break;
+                    case '3':
+                        sort = data.orders.sort((a, b) => {
+                            if (a.date < b.date) return 1
+                            if (a.date > b.date) return -1
+                            return 0
+                        });
+                        break;
+                    default:
+                        throw new Error("Invalid sort type");
                 }
                 //выбор диапазона ответа в зависимости от count
                 const orders = sort.slice([0], [count])
                 //есть ли ещё заказы после последнего переданного
                 const isNext = Boolean(data.orders[count])
                 //возвращаем ответ
-                return res.json({
+                return res.status(200).json({
                     token,
                     user,
                     orders,
@@ -95,8 +99,8 @@ export const getMe = (req, res) => {
                 })
             }
         }
-        res.json({ message: 'Такого пользователя не существует' })
+        res.status(404).json({ message: 'Такого пользователя не существует' })
     } catch (error) {
-        res.json({ message: 'Нет доступа.' })
+        res.status(500).json({ message: 'Ошибка при получении информации о пользователе' })
     }
 }
